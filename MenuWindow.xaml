@@ -7,12 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <StackPanel>
-            <Line Height="150"></Line>
-            <Button x:Name="largura" Content="Busca em Largura" Width="150" Margin="10"></Button>
-            <Button x:Name="profundidade" Content="Busca em Profundidade" Width="150" Margin="10"></Button>
-            <Button x:Name="gulosa" Content="Busca Gulosa" Width="150" Margin="10"></Button>
-            <Button x:Name="estrela" Content="Busca A*" Width="150" Margin="10"></Button>
-        </StackPanel>
+
     </Grid>
 </Window>
