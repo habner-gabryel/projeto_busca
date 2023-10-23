@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:projeto_busca"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Algorítmos de Busca" Height="450" Width="800">
+
     <Grid>
         <StackPanel>
             <Line Height="150"></Line>
-            <Button x:Name="largura" Content="Busca em Largura" Width="150" Margin="10"></Button>
-            <Button x:Name="profundidade" Content="Busca em Profundidade" Width="150" Margin="10"></Button>
-            <Button x:Name="gulosa" Content="Busca Gulosa" Width="150" Margin="10"></Button>
-            <Button x:Name="estrela" Content="Busca A*" Width="150" Margin="10"></Button>
+            <Button x:Name="largura" Width="150" Margin="10" Background="#FF008B9E" Foreground="White" BorderBrush="Black" >Busca em Largura</Button>
+            <Button x:Name="profundidade" Width="150" Margin="10" Background="#FF008B9E" Foreground="White" BorderBrush="Black">Busca em Profundidade</Button>
+            <Button x:Name="gulosa" Width="150" Margin="10" Background="#FF008B9E" Foreground="White" BorderBrush="Black">Busca Gulosa</Button>
+            <Button x:Name="estrela" Width="150" Margin="10" Background="#FF008B9E" Foreground="White" BorderBrush="Black">Busca A*</Button>
         </StackPanel>
     </Grid>
 </Window>
