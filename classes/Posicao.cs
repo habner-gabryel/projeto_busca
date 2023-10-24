@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace projeto_busca.classes
+﻿namespace projeto_busca.classes
 {
-    internal class Posicao
+    class Posicao
     {
         public Posicao(int linha, int coluna)
         {

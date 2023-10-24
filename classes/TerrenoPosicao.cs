@@ -1,25 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace projeto_busca.classes
+﻿namespace projeto_busca.classes
 {
-    internal class TerrenoPosicao
+    class TerrenoPosicao
     {
-        public TerrenoPosicao(Terreno terreno, Posicao posicao) {
-            this.Terreno = terreno;
-            this.Posicao = posicao; 
-        }
+        public Posicao posicao {  get; set; }
+        public Terreno terreno {  get; protected set; }
+        public Mapa mapa { get; protected set; }
 
-        Terreno Terreno { get; set; }
-
-        public Posicao Posicao { get; set; }
-
-        public override string ToString()
+        public TerrenoPosicao(Posicao posicao, Terreno terreno, Mapa mapa)
         {
-            return Terreno.ToString() + " | " + Posicao.ToString();
+            this.posicao = posicao;
+            this.terreno = terreno;
+            this.mapa = mapa;
         }
     }
 }
