@@ -20,7 +20,7 @@ namespace projeto_busca.Classes
         }
 
         public Premio ObterPremio(Posicao posicao) {
-            Premio premio = null;
+            Premio? premio = null;
             foreach(Premio p in this.premios) {
                 if(p.terrenoPosicao != null && p.terrenoPosicao.posicao != null && p.terrenoPosicao.posicao == posicao)
                 {

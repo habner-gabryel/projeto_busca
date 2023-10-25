@@ -4,13 +4,11 @@
     {
         public Posicao posicao {  get; set; }
         public Terreno terreno {  get; protected set; }
-        public Mapa mapa { get; protected set; }
 
-        public TerrenoPosicao(Posicao posicao, Terreno terreno, Mapa mapa)
+        public TerrenoPosicao(Terreno terreno, Posicao posicao)
         {
-            this.posicao = posicao;
             this.terreno = terreno;
-            this.mapa = mapa;
+            this.posicao = posicao;
         }
     }
 }
