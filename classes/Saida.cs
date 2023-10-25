@@ -1,4 +1,4 @@
-﻿namespace projeto_busca.classes
+﻿namespace projeto_busca.Classes
 {
     class Saida
     {

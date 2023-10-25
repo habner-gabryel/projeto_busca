@@ -1,4 +1,6 @@
-﻿namespace projeto_busca.classes
+﻿using System;
+
+namespace projeto_busca.Classes
 {
     class Posicao
     {
@@ -14,6 +16,18 @@
         public override string ToString()
         {
             return "Linha: " +  linha + " - Coluna: " + coluna;
+        }
+
+        public Boolean isValidPosicaoInMapa(Mapa mapa, int linha, int coluna) {
+            if (mapa == null) {
+                return false;
+            }
+
+            if(mapa.linhas < linha || mapa.colunas < coluna) {
+                return false;
+            }
+
+            return true;
         }
     }
 }
