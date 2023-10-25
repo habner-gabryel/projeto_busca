@@ -1,4 +1,5 @@
 ﻿using projeto_busca.Exceptions;
+using System.Collections.Generic;
 using System.Configuration;
 
 namespace projeto_busca.Classes
@@ -7,11 +8,11 @@ namespace projeto_busca.Classes
     {
         public int linhas {  get; set; }
         public int colunas { get; set; }
-        private Premio[] premios;
+        private List<Premio> premios;
         private Saida saida;
-        private TerrenoPosicao[] tps;
+        private List<TerrenoPosicao> tps;
 
-        public Mapa(int linhas, int colunas, Premio[] premios, Saida saida, TerrenoPosicao[] tps) { 
+        public Mapa(int linhas, int colunas, List<Premio> premios, Saida saida, List<TerrenoPosicao> tps) { 
             this.linhas = linhas; 
             this.colunas = colunas;
             this.premios = premios;
