@@ -1,28 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using projeto_busca.Views.Pages;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace projeto_busca
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void btLargura_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MainFrame.NavigationService.Navigate(new LarguraPage());
+            } catch (Exception ex)
+            {
+               ExceptionTextBox.Text = "Ocorreu uma exceção: " + ex.Message;
+            }
+        }
+
+        private void btProfundidade_Click(object sender, EventArgs e)
+        {
+            try
+            { 
+                MainFrame.NavigationService.Navigate(new ProfundidadePage());
+            } catch(Exception ex)
+            {
+                ExceptionTextBox.Text = "Ocorreu uma exceção: " + ex.Message;
+            }
+        }
+
+        private void btGulosa_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MainFrame.NavigationService.Navigate(new GulosaPage());
+            } catch (Exception ex) {
+                ExceptionTextBox.Text = "Ocorreu uma exceção: " + ex.Message;
+            }
+        }
+
+        private void btEstrela_Click(object sender, EventArgs e)
+        {
+            try
+            {
+            MainFrame.NavigationService.Navigate(new EstrelaPage());
+            } catch ( Exception ex)
+            {
+                ExceptionTextBox.Text = "Ocorreu uma exceção: " + ex.Message;
+            }
         }
     }
 }

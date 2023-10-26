@@ -10,10 +10,14 @@
     <Grid>
         <StackPanel>
             <Line Height="150"></Line>
-            <Button x:Name="largura" Width="150" Margin="10" Background="#FF008B9E" Foreground="White" BorderBrush="Black" >Busca em Largura</Button>
-            <Button x:Name="profundidade" Width="150" Margin="10" Background="#FF008B9E" Foreground="White" BorderBrush="Black">Busca em Profundidade</Button>
-            <Button x:Name="gulosa" Width="150" Margin="10" Background="#FF008B9E" Foreground="White" BorderBrush="Black">Busca Gulosa</Button>
-            <Button x:Name="estrela" Width="150" Margin="10" Background="#FF008B9E" Foreground="White" BorderBrush="Black">Busca A*</Button>
+            <Button x:Name="btLargura" Width="150" Margin="10" Background="#FF008B9E" Foreground="White" BorderBrush="Black" Click="btLargura_Click" >Busca em Largura</Button>
+            <Button x:Name="btProfundidade" Width="150" Margin="10" Background="#FF008B9E" Foreground="White" BorderBrush="Black" Click="btProfundidade_Click">Busca em Profundidade</Button>
+            <Button x:Name="btGulosa" Width="150" Margin="10" Background="#FF008B9E" Foreground="White" BorderBrush="Black" Click="btGulosa_Click">Busca Gulosa</Button>
+            <Button x:Name="btEstrela" Width="150" Margin="10" Background="#FF008B9E" Foreground="White" BorderBrush="Black" Click="btEstrela_Click">Busca A*</Button>
+
+            <TextBox x:Name="ExceptionTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="100"/>
+            
+            <Frame x:Name="MainFrame" Grid.Row="1"/>
         </StackPanel>
     </Grid>
 </Window>
