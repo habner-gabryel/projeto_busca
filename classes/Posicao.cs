@@ -11,19 +11,22 @@ namespace projeto_busca.Classes
         }
 
         public int linha { get; set; }
-        public int coluna {  get; set; }
+        public int coluna { get; set; }
 
         public override string ToString()
         {
-            return "Linha: " +  linha + " - Coluna: " + coluna;
+            return "Linha: " + linha + " - Coluna: " + coluna;
         }
 
-        public Boolean isValidPosicaoInMapa(Mapa mapa, int linha, int coluna) {
-            if (mapa == null) {
+        public Boolean isValidPosicaoInMapa(Mapa mapa, int linha, int coluna)
+        {
+            if (mapa == null)
+            {
                 return false;
             }
 
-            if(mapa.linhas < linha || mapa.colunas < coluna) {
+            if (mapa.linhas < linha || mapa.colunas < coluna)
+            {
                 return false;
             }
 

@@ -2,8 +2,8 @@
 {
     class Premio
     {
-        public TerrenoPosicao terrenoPosicao {  get; private set; }
-        public int valor {  get; set; }
+        public TerrenoPosicao terrenoPosicao { get; private set; }
+        public int valor { get; set; }
         public Premio(TerrenoPosicao terrenoPosicao, int valor)
         {
             this.terrenoPosicao = terrenoPosicao;
