@@ -1,6 +1,7 @@
 ﻿using projeto_busca.Views.Pages;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace projeto_busca
 {
@@ -13,45 +14,26 @@ namespace projeto_busca
 
         private void btLargura_Click(object sender, EventArgs e)
         {
-            try
-            {
-                MainFrame.NavigationService.Navigate(new LarguraPage());
-            } catch (Exception ex)
-            {
-               ExceptionTextBox.Text = "Ocorreu uma exceção: " + ex.Message;
-            }
+            LarguraWindow largura = new();
+            largura.Show();
         }
 
         private void btProfundidade_Click(object sender, EventArgs e)
         {
-            try
-            { 
-                MainFrame.NavigationService.Navigate(new ProfundidadePage());
-            } catch(Exception ex)
-            {
-                ExceptionTextBox.Text = "Ocorreu uma exceção: " + ex.Message;
-            }
+            ProfundidadeWindow profundidade = new();
+            profundidade.Show();
         }
 
         private void btGulosa_Click(object sender, EventArgs e)
         {
-            try
-            {
-                MainFrame.NavigationService.Navigate(new GulosaPage());
-            } catch (Exception ex) {
-                ExceptionTextBox.Text = "Ocorreu uma exceção: " + ex.Message;
-            }
+            GulosaWindow gulosa = new();
+            gulosa.Show();
         }
 
         private void btEstrela_Click(object sender, EventArgs e)
         {
-            try
-            {
-            MainFrame.NavigationService.Navigate(new EstrelaPage());
-            } catch ( Exception ex)
-            {
-                ExceptionTextBox.Text = "Ocorreu uma exceção: " + ex.Message;
-            }
+            EstrelaWindow estrela = new();
+            estrela.Show();
         }
     }
 }

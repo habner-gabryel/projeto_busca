@@ -8,4 +8,24 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Views\Pages\EstrelaPage.xaml.cs" />
+    <Compile Remove="Views\Pages\GulosaPage.xaml.cs" />
+    <Compile Remove="Views\Pages\LarguraPage.xaml.cs" />
+    <Compile Remove="Views\Pages\PageWindow.xaml.cs" />
+    <Compile Remove="Views\Pages\ProfundidadePage.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Views\Pages\EstrelaPage.xaml" />
+    <Page Remove="Views\Pages\GulosaPage.xaml" />
+    <Page Remove="Views\Pages\LarguraPage.xaml" />
+    <Page Remove="Views\Pages\PageWindow.xaml" />
+    <Page Remove="Views\Pages\ProfundidadePage.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Imagens\" />
+  </ItemGroup>
+
 </Project>

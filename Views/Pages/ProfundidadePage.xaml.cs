@@ -1,5 +1,6 @@
 ﻿using projeto_busca.Classes;
 using projeto_busca.Controllers;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace projeto_busca.Views.Pages
@@ -7,9 +8,9 @@ namespace projeto_busca.Views.Pages
     /// <summary>
     /// Interação lógica para ProfundidadePage.xam
     /// </summary>
-    public partial class ProfundidadePage : Page
+    public partial class ProfundidadeWindow : Window
     {
-        public ProfundidadePage()
+        public ProfundidadeWindow()
         {
             int linhas = 15;
             int colunas = 15;

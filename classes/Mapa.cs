@@ -28,23 +28,31 @@ namespace projeto_busca.Classes
                 if (p.terrenoPosicao != null && p.terrenoPosicao.posicao != null && p.terrenoPosicao.posicao == posicao)
                 {
                     premio = p;
+                    break;
                 }
             }
 
-            if (premio == null)
-            {
-                throw new OberPremioExeption("Nenhum premio encontrado para a posicao: " + posicao.ToString());
-            }
             return premio;
         }
 
-        public Saida obterSaida()
+        public Saida obterSaida(Posicao posicao)
         {
-            if (this.saida == null || this.saida.posicao == null)
+            if (this.saida == null || this.saida.terrenoPosicao == null)
             {
-                throw new System.Exception("Saida inexistente no mapa");
+                return null;
             }
-            return this.saida;
+
+            if(saida.terrenoPosicao.posicao == posicao)
+            { 
+                return this.saida;
+            }
+
+            return null;
+        }
+
+        public List<TerrenoPosicao> obterTerrenos()
+        {
+            return tps;
         }
     }
 }

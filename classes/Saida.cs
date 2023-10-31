@@ -2,12 +2,12 @@
 {
     class Saida
     {
-        public Posicao posicao { get; set; }
+        public TerrenoPosicao terrenoPosicao { get; set; }
         public int heuristica { get; set; }
 
-        public Saida(Posicao posicao)
+        public Saida(TerrenoPosicao terrenoPosicao)
         {
-            this.posicao = posicao;
+            this.terrenoPosicao = terrenoPosicao;
         }
 
     }
