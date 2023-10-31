@@ -37,6 +37,7 @@ namespace projeto_busca.Classes
             return premio;
         }
 
+        public Inicio Inicio => inicio;
         public Inicio obterInicio(TerrenoPosicao posicao)
         {
             if(this.inicio == null || this.inicio.terrenoPosicao == null)
@@ -51,6 +52,7 @@ namespace projeto_busca.Classes
             return null;
         }
 
+        public Saida Saida => saida;
         public Saida obterSaida(TerrenoPosicao posicao)
         {
             if (this.saida == null || this.saida.terrenoPosicao == null)
@@ -69,6 +71,23 @@ namespace projeto_busca.Classes
         public List<TerrenoPosicao> obterTerrenos()
         {
             return tps;
+        }
+
+        public List<TerrenoPosicao> obterTerrenosVizinhos(TerrenoPosicao posicao)
+        {
+            List<TerrenoPosicao> vizinhos = new();
+            List<TerrenoPosicao> terrenosMap = obterTerrenos();
+
+            foreach (TerrenoPosicao tm in terrenosMap) {
+                if ((tm.posicao.linha - 1 == posicao.posicao.linha && tm.posicao.coluna == posicao.posicao.coluna)
+                || (tm.posicao.linha == posicao.posicao.linha && tm.posicao.coluna - 1 == posicao.posicao.coluna)
+                || (tm.posicao.linha + 1 == posicao.posicao.linha && tm.posicao.coluna == posicao.posicao.coluna)
+                || (tm.posicao.linha == posicao.posicao.linha && tm.posicao.coluna + 1 == posicao.posicao.coluna)
+                && tm.terreno != Terreno.Parede) {
+                    vizinhos.Add(tm);
+                }
+            }
+            return vizinhos;
         }
     }
 }

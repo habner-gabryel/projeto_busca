@@ -24,8 +24,4 @@
     <Page Remove="Views\Pages\ProfundidadePage.xaml" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Imagens\" />
-  </ItemGroup>
-
 </Project>

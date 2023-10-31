@@ -24,10 +24,19 @@ namespace projeto_busca.Views.Pages
         public ProfundidadeWindow()
         {
             InitializeComponent();
-            
-            List<TerrenoPosicao> terrenos = MapaController.RenderCenario();
+
+            Mapa mapa = MapaController.CriarMapa(10, 10);
+
+            List<TerrenoPosicao> terrenos = MapaController.RenderCenario(mapa);
 
             AdicionarImagensNaGrade(terrenos);
+
+            EfetuarBusca(mapa);
+        }
+
+        private void EfetuarBusca(Mapa mapa)
+        {
+            throw new NotImplementedException();
         }
 
         private void AdicionarImagensNaGrade(List<TerrenoPosicao> posicoes)

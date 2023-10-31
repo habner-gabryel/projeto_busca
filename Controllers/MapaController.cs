@@ -47,9 +47,8 @@ namespace projeto_busca.Controllers
             return new Mapa(linhas, colunas, premios, inicio, saida, posicoes);
         }
 
-        public static List<TerrenoPosicao> RenderCenario()
+        public static List<TerrenoPosicao> RenderCenario(Mapa mapa)
         {
-            Mapa mapa = CriarMapa(10, 10);
 
             List<TerrenoPosicao> terrenos = mapa.obterTerrenos();
 
@@ -61,13 +60,10 @@ namespace projeto_busca.Controllers
 
                 if (inicio != null) {
                     terreno.mudarImagem("inicio.jpg");
-                    MessageBox.Show("inicio é na posição: " + terreno.posicao.ToString());
                 } else if (saida != null) {
                     terreno.mudarImagem("saida.jpg");
-                    MessageBox.Show("saida é na posição: " + terreno.posicao.ToString());
                 } else if (premio != null) {
                     terreno.mudarImagem("premio.jpg");
-                    MessageBox.Show("premio é na posição: " + terreno.posicao.ToString());
                 }
             }
 

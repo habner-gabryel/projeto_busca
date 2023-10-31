@@ -25,12 +25,16 @@ namespace projeto_busca.Views.Pages
         {
             InitializeComponent();
 
-            List<TerrenoPosicao> terrenos = MapaController.RenderCenario();
+            Mapa mapa = MapaController.CriarMapa(10, 10);
 
-            AdicionarImagensNaGrade(terrenos);
+            List<TerrenoPosicao> terrenos = MapaController.RenderCenario(mapa);
+
+            mapa = AdicionarImagensNaGrade(mapa, terrenos);
+
+            EfetuarBusca(mapa);
         }
 
-        private void AdicionarImagensNaGrade(List<TerrenoPosicao> posicoes)
+        private Mapa AdicionarImagensNaGrade(Mapa mapa, List<TerrenoPosicao> posicoes)
         {
             foreach (TerrenoPosicao pos in posicoes)
             {
@@ -55,6 +59,50 @@ namespace projeto_busca.Views.Pages
                 Grid.SetColumn(image, pos.posicao.coluna);
 
                 gridContainer.Items.Add(image);
+                pos.indexItem = gridContainer.Items.IndexOf(image);
+            }
+
+            return mapa;
+        }
+
+        private void EfetuarBusca(Mapa mapa)
+        {
+            Gato gato = new Gato(mapa.Inicio.terrenoPosicao);
+
+            List<TerrenoPosicao> caminho = gato.buscaLargura(mapa, mapa.Saida);
+
+            if(caminho.Count == 0)
+            {
+                MessageBox.Show("caminho não encontrado.");
+            } else
+            {
+                MessageBox.Show("caminho encontrado, porém o programa ta fazendo c# doce");
+            }
+
+            foreach (TerrenoPosicao pos in caminho)
+            {
+                Image image = new()
+                {
+                    Width = 50,
+                    Height = 50
+                };
+
+                BitmapImage bitImagem = new();
+
+                String url = "C:\\repositorios\\VisualStudio\\projeto_busca\\Views\\Imagens\\caminho.jpg";
+
+                bitImagem.BeginInit();
+                bitImagem.UriSource = new(@url);
+                bitImagem.DecodePixelWidth = 50;
+                bitImagem.DecodePixelHeight = 50;
+                bitImagem.EndInit();
+
+                image.Source = bitImagem;
+                Grid.SetRow(image, pos.posicao.linha);
+                Grid.SetColumn(image, pos.posicao.coluna);
+
+                gridContainer.Items.Remove(pos.indexItem);
+                gridContainer.Items.Insert(pos.indexItem, image);
             }
         }
     }

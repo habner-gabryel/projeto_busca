@@ -9,6 +9,10 @@ namespace projeto_busca.Classes
         public Posicao posicao { get; set; }
         public Terreno terreno { get; protected set; }
 
+        public int indexItem { get; set; }
+
+        public int heuristica {  get; set; }
+
         public String imagem { get; protected set; }
 
         public  TerrenoPosicao(Terreno terreno, Posicao posicao)

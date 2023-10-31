@@ -3,7 +3,6 @@
     class Saida
     {
         public TerrenoPosicao terrenoPosicao { get; set; }
-        public int heuristica { get; set; }
 
         public Saida(TerrenoPosicao terrenoPosicao)
         {
