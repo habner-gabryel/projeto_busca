@@ -24,28 +24,8 @@ namespace projeto_busca.Views.Pages
         public ProfundidadeWindow()
         {
             InitializeComponent();
-
-            int linhas = 10;
-            int colunas = 10;
-
-            Mapa mapa = MapaController.criarMapa(linhas, colunas);
-
-            List<TerrenoPosicao> terrenos = mapa.obterTerrenos();
-
-            foreach (TerrenoPosicao terreno in terrenos)
-            {
-                Saida saida = mapa.obterSaida(terreno.posicao);
-                Premio premio = mapa.ObterPremio(terreno.posicao);
-
-                if (saida != null)
-                {
-                    terreno.mudarImagem("saida.jpg");
-                }
-                else if (premio != null)
-                {
-                    terreno.mudarImagem("premio.jpg");
-                }
-            }
+            
+            List<TerrenoPosicao> terrenos = MapaController.RenderCenario();
 
             AdicionarImagensNaGrade(terrenos);
         }
@@ -54,16 +34,18 @@ namespace projeto_busca.Views.Pages
         {
             foreach (TerrenoPosicao pos in posicoes)
             {
-                Image image = new Image();
-                image.Width = 50;
-                image.Height = 50;
+                Image image = new()
+                {
+                    Width = 50,
+                    Height = 50
+                };
 
-                BitmapImage bitImagem = new BitmapImage();
+                BitmapImage bitImagem = new();
 
                 String url = "C:\\repositorios\\VisualStudio\\projeto_busca\\Views\\Imagens\\" + pos.imagem;
 
                 bitImagem.BeginInit();
-                bitImagem.UriSource = new Uri(@url);
+                bitImagem.UriSource = new(@url);
                 bitImagem.DecodePixelWidth = 50;
                 bitImagem.DecodePixelHeight = 50;
                 bitImagem.EndInit();

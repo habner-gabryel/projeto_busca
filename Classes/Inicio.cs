@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace projeto_busca.Classes
 {
-    internal class Inicio
+    class Inicio
     {
+        public TerrenoPosicao terrenoPosicao { get; set; }
+        public int heuristica { get; set; }
+
+        public Inicio(TerrenoPosicao terrenoPosicao)
+        {
+            this.terrenoPosicao = terrenoPosicao;
+        }
     }
 }

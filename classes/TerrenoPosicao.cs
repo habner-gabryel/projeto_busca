@@ -4,7 +4,7 @@ using System;
 
 namespace projeto_busca.Classes
 {
-    class TerrenoPosicao : FrameworkElement
+    class TerrenoPosicao
     {
         public Posicao posicao { get; set; }
         public Terreno terreno { get; protected set; }
@@ -29,8 +29,14 @@ namespace projeto_busca.Classes
                 case Terreno.Pantano:
                     this.imagem = "pantano.jpg";
                     break;
-                default:
+                case Terreno.Rochoso:
+                    this.imagem = "rochoso.jpg";
+                    break;
+                case Terreno.Parede:
                     this.imagem = "parede.jpg";
+                    break;
+                default:
+                    this.imagem = "inexistente.jpeg";
                     break;
             }
         }

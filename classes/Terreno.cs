@@ -5,6 +5,7 @@
         Solido = 1,
         Rochoso = 10,
         Arenoso = 4,
-        Pantano = 20
+        Pantano = 20,
+        Parede = 4000
     }
 }
