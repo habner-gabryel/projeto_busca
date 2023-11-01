@@ -22,10 +22,7 @@ namespace projeto_busca.Classes
 
         public int getPremiosColetados() {  return premiosColetados; }
 
-        public void coletaPremio()
-        {
-            this.premiosColetados++;
-        }
+        public void coletaPremio(Premio premio) { this.premiosColetados += premio.valor; }
 
         public List<TerrenoPosicao> buscaLargura(Mapa mapa, Saida saida)
         {
@@ -41,8 +38,13 @@ namespace projeto_busca.Classes
                 TerrenoPosicao terrenoAtual = posicaoFila.Item1;
                 List<TerrenoPosicao> caminhoPercorrido = posicaoFila.Item2;
 
+                if(terrenoAtual.terreno == Terreno.Parede)
+                {
+                    continue;
+                }
+
                 if(mapa.ObterPremio(terrenoAtual) != null) {
-                    coletaPremio();
+                    coletaPremio(mapa.ObterPremio(terrenoAtual));
                 }
 
                 if (terrenoAtual == saida.terrenoPosicao) {

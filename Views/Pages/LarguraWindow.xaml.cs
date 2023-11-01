@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,89 +22,81 @@ namespace projeto_busca.Views.Pages
     /// </summary>
     public partial class LarguraWindow : Window
     {
+        private readonly Mapa mapa;
         public LarguraWindow()
         {
             InitializeComponent();
 
-            Mapa mapa = MapaController.CriarMapa(10, 10);
+            this.mapa = MapaController.CriarMapa(10, 10);
 
-            List<TerrenoPosicao> terrenos = MapaController.RenderCenario(mapa);
+            List<TerrenoPosicao> terrenos = MapaController.RenderCenario(this.mapa);
 
-            mapa = AdicionarImagensNaGrade(mapa, terrenos);
-
-            EfetuarBusca(mapa);
+            AdicionarImagensNaGrade(terrenos);
         }
 
-        private Mapa AdicionarImagensNaGrade(Mapa mapa, List<TerrenoPosicao> posicoes)
+        private void AdicionarImagensNaGrade(List<TerrenoPosicao> posicoes)
         {
             foreach (TerrenoPosicao pos in posicoes)
             {
-                Image image = new()
-                {
-                    Width = 50,
-                    Height = 50
-                };
+                Image image = renderImagem(pos.imagem, 80, 80);
 
-                BitmapImage bitImagem = new();
-
-                String url = "C:\\repositorios\\VisualStudio\\projeto_busca\\Views\\Imagens\\" + pos.imagem;
-
-                bitImagem.BeginInit();
-                bitImagem.UriSource = new(@url);
-                bitImagem.DecodePixelWidth = 50;
-                bitImagem.DecodePixelHeight = 50;
-                bitImagem.EndInit();
-                
-                image.Source = bitImagem;
+                matrizGrid.Children.Add(image);
                 Grid.SetRow(image, pos.posicao.linha);
                 Grid.SetColumn(image, pos.posicao.coluna);
 
-                gridContainer.Items.Add(image);
-                pos.indexItem = gridContainer.Items.IndexOf(image);
             }
-
-            return mapa;
         }
 
-        private void EfetuarBusca(Mapa mapa)
+        private void EfetuarBusca()
         {
-            Gato gato = new Gato(mapa.Inicio.terrenoPosicao);
+            Gato gato = new Gato(this.mapa.Inicio.terrenoPosicao);
 
-            List<TerrenoPosicao> caminho = gato.buscaLargura(mapa, mapa.Saida);
+            List<TerrenoPosicao> caminho = gato.buscaLargura(this.mapa, this.mapa.Saida);
 
-            if(caminho.Count == 0)
-            {
-                MessageBox.Show("caminho não encontrado.");
-            } else
-            {
-                MessageBox.Show("caminho encontrado, porém o programa ta fazendo c# doce");
-            }
+            foreach (TerrenoPosicao pos in caminho) {
 
-            foreach (TerrenoPosicao pos in caminho)
-            {
-                Image image = new()
-                {
-                    Width = 50,
-                    Height = 50
-                };
+                if(pos == mapa.Saida.terrenoPosicao || pos == mapa.Inicio.terrenoPosicao) {
+                    continue;
+                }
 
-                BitmapImage bitImagem = new();
+                UIElement imagemAnterior = matrizGrid.Children
+                .Cast<UIElement>()
+                .First(e => Grid.GetRow(e) == pos.posicao.linha && Grid.GetColumn(e) == pos.posicao.coluna);
+                matrizGrid.Children.Remove(imagemAnterior);
+               
+                Image image = renderImagem("caminho.png", 80, 80);
 
-                String url = "C:\\repositorios\\VisualStudio\\projeto_busca\\Views\\Imagens\\caminho.jpg";
-
-                bitImagem.BeginInit();
-                bitImagem.UriSource = new(@url);
-                bitImagem.DecodePixelWidth = 50;
-                bitImagem.DecodePixelHeight = 50;
-                bitImagem.EndInit();
-
-                image.Source = bitImagem;
+                matrizGrid.Children.Add(image);
                 Grid.SetRow(image, pos.posicao.linha);
                 Grid.SetColumn(image, pos.posicao.coluna);
-
-                gridContainer.Items.Remove(pos.indexItem);
-                gridContainer.Items.Insert(pos.indexItem, image);
             }
         }
+
+        private Image renderImagem(String nomeImg, int width, int height)
+        {
+            Image image = new()
+            {
+                Width = width,
+                Height = height
+            };
+
+            BitmapImage bitImagem = new();
+
+            String url = "C:\\repositorios\\VisualStudio\\projeto_busca\\Views\\Imagens\\" + nomeImg;
+
+            bitImagem.BeginInit();
+            bitImagem.UriSource = new(@url);
+            bitImagem.DecodePixelWidth = width;
+            bitImagem.DecodePixelHeight = height;
+            bitImagem.EndInit();
+            image.Source = bitImagem;
+            return image;
+        }
+
+        private void btBuscar_Click(object sender, EventArgs e) {
+            EfetuarBusca();
+            myPopup.IsOpen = false;
+        }
+
     }
 }

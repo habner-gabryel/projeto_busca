@@ -5,21 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:projeto_busca.Views.Pages"
         mc:Ignorable="d"
-        Title="Busca em Largura" Height="530" Width="530">
-    <Grid HorizontalAlignment="center" Width="500" Height="500">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        Title="Busca em Largura" Height="850" Width="830">
+    <Grid HorizontalAlignment="center" Width="800" Height="800">
+        <Grid x:Name="matrizGrid" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+        </Grid>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ItemsControl x:Name="gridContainer" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel IsItemsHost="True" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-        </ScrollViewer>
+        <Popup Name="myPopup" IsOpen="true">
+            <Button x:Name="btBuscar" Width="150" Margin="0" Background="#FF008B9E" Foreground="White" BorderBrush="Black" Click="btBuscar_Click">Iniciar</Button>
+        </Popup>
     </Grid>
 </Window>

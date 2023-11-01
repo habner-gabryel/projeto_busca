@@ -59,11 +59,11 @@ namespace projeto_busca.Controllers
                 Premio premio = mapa.ObterPremio(terreno);
 
                 if (inicio != null) {
-                    terreno.mudarImagem("inicio.jpg");
+                    terreno.mudarImagem("inicio.png");
                 } else if (saida != null) {
-                    terreno.mudarImagem("saida.jpg");
+                    terreno.mudarImagem("saida.png");
                 } else if (premio != null) {
-                    terreno.mudarImagem("premio.jpg");
+                    terreno.mudarImagem("premio.png");
                 }
             }
 

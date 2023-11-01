@@ -25,19 +25,19 @@ namespace projeto_busca.Classes
             switch (this.terreno)
             {
                 case Terreno.Solido:
-                    this.imagem = "solido.jpg";
+                    this.imagem = "solido.png";
                     break;
                 case Terreno.Arenoso:
-                    this.imagem = "arenoso.jpg";
+                    this.imagem = "arenoso.png";
                     break;
                 case Terreno.Pantano:
-                    this.imagem = "pantano.jpg";
+                    this.imagem = "pantano.png";
                     break;
                 case Terreno.Rochoso:
-                    this.imagem = "rochoso.jpg";
+                    this.imagem = "rochoso.png";
                     break;
                 case Terreno.Parede:
-                    this.imagem = "parede.jpg";
+                    this.imagem = "parede.png";
                     break;
                 default:
                     this.imagem = "inexistente.jpeg";
