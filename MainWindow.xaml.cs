@@ -14,26 +14,26 @@ namespace projeto_busca
 
         private void btLargura_Click(object sender, EventArgs e)
         {
-            LarguraWindow largura = new();
-            largura.Show();
+            MapaWindow mapaWindow = new("largura");
+            mapaWindow.Show();
         }
 
         private void btProfundidade_Click(object sender, EventArgs e)
         {
-            ProfundidadeWindow profundidade = new();
-            profundidade.Show();
+            MapaWindow mapaWindow = new("profundidade");
+            mapaWindow.Show();
         }
 
         private void btGulosa_Click(object sender, EventArgs e)
         {
-            GulosaWindow gulosa = new();
-            gulosa.Show();
+            MapaWindow mapaWindow = new("gulosa");
+            mapaWindow.Show();
         }
 
         private void btEstrela_Click(object sender, EventArgs e)
         {
-            EstrelaWindow estrela = new();
-            estrela.Show();
+            MapaWindow mapaWindow = new("estrela");
+            mapaWindow.Show();
         }
     }
 }

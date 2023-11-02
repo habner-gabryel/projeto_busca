@@ -2,6 +2,7 @@
 using System.Xml.Linq;
 using System;
 using System.Runtime.CompilerServices;
+using System.Linq;
 
 namespace projeto_busca.Classes
 {
@@ -63,6 +64,39 @@ namespace projeto_busca.Classes
                         queue.Enqueue(new Tuple<TerrenoPosicao, List<TerrenoPosicao>>(vizinho, novoLocal));
                         visitados.Add(vizinho);
                     }
+                }
+            }
+
+            return new List<TerrenoPosicao>();
+        }
+
+        public List<TerrenoPosicao> buscaProfundidade(Mapa mapa, TerrenoPosicao inicio, Saida saida, HashSet<TerrenoPosicao> visitados)
+        {
+            if (visitados.Contains(inicio))
+            {
+                return new List<TerrenoPosicao>();
+            }
+
+            visitados.Add(inicio);
+
+            if (mapa.ObterPremio(inicio) != null)
+            {
+                coletaPremio(mapa.ObterPremio(inicio));
+            }
+
+            if (inicio == saida.terrenoPosicao)
+            {
+                return visitados.ToList<TerrenoPosicao>();
+            }
+
+            foreach (var vizinho in mapa.obterTerrenosVizinhos(inicio))
+            {
+                List<TerrenoPosicao> caminho= buscaProfundidade(mapa, vizinho, saida, visitados);
+                
+                if (caminho != null)
+                {
+                    caminho.Insert(0, inicio);
+                    return caminho;
                 }
             }
 

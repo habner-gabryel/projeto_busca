@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,22 +13,29 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace projeto_busca.Views.Pages
 {
     /// <summary>
-    /// Lógica interna para LarguraWindow.xaml
+    /// Lógica interna para MapaWindow.xaml
     /// </summary>
-    public partial class LarguraWindow : Window
+    public partial class MapaWindow : Window
     {
+        private String tipoBusca;
+
         private readonly Mapa mapa;
 
         private Gato gato;
-        public LarguraWindow()
+        public MapaWindow(String tipoBusca)
         {
             InitializeComponent();
 
+            this.tipoBusca = tipoBusca;
+
             this.mapa = MapaController.CriarMapa(10, 10);
+
+            this.gato = new Gato(this.mapa.Inicio.terrenoPosicao);
 
             List<TerrenoPosicao> terrenos = MapaController.RenderCenario(this.mapa);
 
@@ -40,7 +46,7 @@ namespace projeto_busca.Views.Pages
         {
             foreach (TerrenoPosicao pos in posicoes)
             {
-                Image image = renderImagem(pos.imagem, 80, 80, null);
+                Image image = renderImagem(pos.imagem, 80, 80, String.Empty);
 
                 matrizGrid.Children.Add(image);
                 Grid.SetRow(image, pos.posicao.linha);
@@ -49,7 +55,8 @@ namespace projeto_busca.Views.Pages
             }
         }
 
-        private void ExecutarMovimento(List<TerrenoPosicao> posicoes) {
+        private void ExecutarMovimento(List<TerrenoPosicao> posicoes)
+        {
 
             Task.Run(() =>
             {
@@ -82,10 +89,24 @@ namespace projeto_busca.Views.Pages
 
         private void EfetuarBusca(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter) {
-                this.gato = new Gato(this.mapa.Inicio.terrenoPosicao);
+            if (e.Key == Key.Enter)
+            {
+                List<TerrenoPosicao> caminho;
 
-                List<TerrenoPosicao> caminho = gato.buscaLargura(this.mapa, this.mapa.Saida);
+                switch (this.tipoBusca)
+                {
+                    case "largura" :
+                        caminho = gato.buscaLargura(this.mapa, this.mapa.Saida);
+                    break;
+                    case "profundidade" :
+                        caminho = gato.buscaProfundidade(this.mapa, this.mapa.Inicio.terrenoPosicao ,this.mapa.Saida, new HashSet<TerrenoPosicao>());
+                    break;
+                    default :
+                        caminho = new List<TerrenoPosicao>();
+                    break;
+                }
+
+                 
 
                 foreach (TerrenoPosicao pos in caminho)
                 {
