@@ -2,6 +2,7 @@
 using projeto_busca.Controllers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,6 +88,9 @@ namespace projeto_busca.Views.Pages
 
                 List<TerrenoPosicao> caminho;
 
+                Stopwatch cronometro = new();
+                cronometro.Start();
+
                 switch (this.tipoBusca)
                 {
                     case "largura" :
@@ -95,12 +99,18 @@ namespace projeto_busca.Views.Pages
                     case "profundidade" :
                         caminho = gato.buscaProfundidade(this.mapa, this.mapa.Inicio.terrenoPosicao ,this.mapa.Saida, new HashSet<TerrenoPosicao>());
                     break;
+                    case "gulosa":
+                        caminho = gato.buscaGulosa(this.mapa, this.mapa.Inicio.terrenoPosicao, this.mapa.Saida);
+                    break;
+                    case "estrela":
+                        caminho = gato.BuscaAEstrela(this.mapa, this.mapa.Inicio.terrenoPosicao, this.mapa.Saida);
+                    break;
                     default :
                         caminho = new List<TerrenoPosicao>();
                     break;
                 }
-
-                 
+                cronometro.Stop();
+                long tempoTotal = cronometro.ElapsedMilliseconds;
 
                 foreach (TerrenoPosicao pos in caminho)
                 {
@@ -127,6 +137,12 @@ namespace projeto_busca.Views.Pages
                 matrizMoveGato.RegisterName("gato", imageGato);
                 Grid.SetRow(imageGato, gato.posicaoAtual().posicao.linha);
                 Grid.SetColumn(imageGato, gato.posicaoAtual().posicao.coluna);
+
+                int casasDec = 2;
+
+                lbCusto.Content = gato.getCustoAcumulado().ToString($"F{casasDec}");
+                lbPontuacao.Content = gato.getPremiosColetados();
+                lbTempo.Content = tempoTotal + "ms";
 
                 ExecutarMovimento(caminho);
             }

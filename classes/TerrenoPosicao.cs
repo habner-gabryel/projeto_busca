@@ -11,7 +11,7 @@ namespace projeto_busca.Classes
 
         public int indexItem { get; set; }
 
-        public int heuristica {  get; set; }
+        public double heuristica { get; protected set; }
 
         public String imagem { get; protected set; }
 
@@ -47,6 +47,12 @@ namespace projeto_busca.Classes
 
         public void mudarImagem(String imagem) { 
             this.imagem = imagem;
+        }
+
+        public Double CalcularHeuristica(Saida saida)
+        {
+            this.heuristica = Math.Sqrt(Math.Pow((saida.terrenoPosicao.posicao.linha - this.posicao.linha), 2) + Math.Pow((saida.terrenoPosicao.posicao.coluna - this.posicao.coluna), 2));
+            return this.heuristica;
         }
     }
 }

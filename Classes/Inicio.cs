@@ -9,7 +9,6 @@ namespace projeto_busca.Classes
     class Inicio
     {
         public TerrenoPosicao terrenoPosicao { get; set; }
-        public int heuristica { get; set; }
 
         public Inicio(TerrenoPosicao terrenoPosicao)
         {

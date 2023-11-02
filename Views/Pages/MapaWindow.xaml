@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:projeto_busca.Views.Pages"
         mc:Ignorable="d"
-        Title="Efetuar Busca no Mapa" Height="850" Width="830" PreviewKeyDown="EfetuarBusca">
-    <Grid HorizontalAlignment="center" Width="800" Height="800">
-        <Grid x:Name="matrizGrid" HorizontalAlignment="Center" VerticalAlignment="Center">
+        Title="Efetuar Busca no Mapa" Height="850" Width="1282" PreviewKeyDown="EfetuarBusca">
+    <Grid HorizontalAlignment="center" Width="1282" Height="850">
+        <Rectangle Fill="#FF87E0E2" HorizontalAlignment="Center" Width="1282" Height="850" VerticalAlignment="Top"/>
+        <Grid x:Name="matrizGrid" HorizontalAlignment="Center" Margin="0,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"/>
                 <ColumnDefinition Width="80"/>
@@ -34,7 +35,7 @@
             </Grid.RowDefinitions>
         </Grid>
 
-        <Grid x:Name="matrizMoveGato" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid x:Name="matrizMoveGato" HorizontalAlignment="Center" Margin="0,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"/>
                 <ColumnDefinition Width="80"/>
@@ -60,5 +61,12 @@
                 <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
         </Grid>
+        <Label Content="Custo da Busca:" Foreground="#FF1B1B1B" FontSize="18" HorizontalAlignment="Left" Margin="1038,268,0,0" VerticalAlignment="Top"/>
+        <Label Content="Pontuação:" Foreground="#FF1B1B1B" FontSize="18" HorizontalAlignment="Left" Margin="1075,307,0,0" VerticalAlignment="Top"/>
+        <Label Content="Tempo de Exc:" Foreground="#FF1B1B1B" FontSize="18" HorizontalAlignment="Left" Margin="1050,346,0,0" VerticalAlignment="Top"/>
+        <Label Name="lbCusto" Content="" Foreground="#FF980202" FontSize="18" HorizontalAlignment="Left" Margin="1178,272,0,0" VerticalAlignment="Top" Height="30" Width="94"/>
+        <Label Name="lbPontuacao" Content="" Foreground="#FFFFEC20" FontSize="18" HorizontalAlignment="Left" Margin="1178,307,0,0" VerticalAlignment="Top" Height="30" Width="94"/>
+        <Label Name="lbTempo" Content="" Foreground="#FF02596F" FontSize="18" HorizontalAlignment="Left" Margin="1178,346,0,0" VerticalAlignment="Top" Height="30" Width="94"/>
+
     </Grid>
 </Window>

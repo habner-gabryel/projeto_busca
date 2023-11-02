@@ -3,13 +3,14 @@ using System.Xml.Linq;
 using System;
 using System.Runtime.CompilerServices;
 using System.Linq;
+using System.Collections;
 
 namespace projeto_busca.Classes
 {
     class Gato
     {
 
-        int custoAcumulado { get; set; }
+        Double custoAcumulado { get; set; }
         int premiosColetados { get; set; }
 
         TerrenoPosicao posicaoGato { get; set; }
@@ -19,7 +20,7 @@ namespace projeto_busca.Classes
             this.posicaoGato = posicaoGato;
         }
 
-        public int getCustoAcumulado() {  return custoAcumulado; }
+        public Double getCustoAcumulado() {  return custoAcumulado; }
 
         public int getPremiosColetados() {  return premiosColetados; }
 
@@ -63,6 +64,7 @@ namespace projeto_busca.Classes
                         List<TerrenoPosicao> novoLocal = new(caminhoPercorrido) { vizinho };
                         queue.Enqueue(new Tuple<TerrenoPosicao, List<TerrenoPosicao>>(vizinho, novoLocal));
                         visitados.Add(vizinho);
+                        this.custoAcumulado += (int)vizinho.terreno;
                     }
                 }
             }
@@ -78,6 +80,7 @@ namespace projeto_busca.Classes
             }
 
             visitados.Add(inicio);
+            this.custoAcumulado += (int)inicio.terreno;
 
             if (mapa.ObterPremio(inicio) != null)
             {
@@ -91,6 +94,11 @@ namespace projeto_busca.Classes
 
             foreach (var vizinho in mapa.obterTerrenosVizinhos(inicio))
             {
+                if (vizinho.terreno == Terreno.Parede)
+                {
+                    continue;
+                }
+
                 List<TerrenoPosicao> caminho= buscaProfundidade(mapa, vizinho, saida, visitados);
                 
                 if (caminho != null)
@@ -102,5 +110,146 @@ namespace projeto_busca.Classes
 
             return new List<TerrenoPosicao>();
         }
+
+        public List<TerrenoPosicao> buscaGulosa(Mapa mapa, TerrenoPosicao inicio, Saida saida)
+        {
+            HashSet<TerrenoPosicao> visitados = new();
+            List<TerrenoPosicao> caminho = new();
+            TerrenoPosicao posAtual = inicio;
+
+            this.custoAcumulado = 0;
+            int custoAtual = (int)inicio.terreno;
+
+            while (posAtual != saida.terrenoPosicao)
+            {
+                caminho.Add(posAtual);
+                visitados.Add(posAtual);
+
+                if (posAtual.terreno == Terreno.Parede)
+                {
+                    continue;
+                }
+
+                if (mapa.ObterPremio(posAtual) != null)
+                {
+                    coletaPremio(mapa.ObterPremio(posAtual));
+                }
+
+                TerrenoPosicao? proxPos = null;
+                double distanciaMin = double.MaxValue;
+
+                foreach (TerrenoPosicao vizinho in mapa.obterTerrenosVizinhos(posAtual))
+                {
+                    if(vizinho.terreno == Terreno.Parede)
+                    {
+                        continue;
+                    }
+
+                    if (!visitados.Contains(vizinho))
+                    {
+                        double distancia = vizinho.CalcularHeuristica(saida);
+                        if (distancia < distanciaMin)
+                        {
+                            distanciaMin = distancia;
+                            proxPos = vizinho;
+                        }
+                        this.custoAcumulado += (int)vizinho.terreno + distancia;
+                    }
+                }
+
+                if (proxPos == null)
+                {
+                    Console.WriteLine("Caminho não encontrado.");
+                    return new List<TerrenoPosicao>();
+                }
+
+                posAtual = proxPos;
+            }
+
+            caminho.Add(posAtual);
+            return caminho;
+        }
+
+
+        public List<TerrenoPosicao> BuscaAEstrela(Mapa mapa, TerrenoPosicao inicio, Saida saida)
+        {
+            var openSet = new HashSet<TerrenoPosicao>();
+            var cameFrom = new Dictionary<TerrenoPosicao, TerrenoPosicao>();
+            var gScore = new Dictionary<TerrenoPosicao, double>();
+            var fScore = new Dictionary<TerrenoPosicao, double>();
+
+            openSet.Add(inicio);
+            gScore[inicio] = 0;
+            fScore[inicio] = gScore[inicio] + inicio.CalcularHeuristica(saida);
+
+            while (openSet.Count > 0)
+            {
+                TerrenoPosicao posAtual = null;
+                double lowestFScore = double.MaxValue;
+
+                foreach (TerrenoPosicao posicao in openSet)
+                {
+                    if (fScore[posicao] < lowestFScore)
+                    {
+                        posAtual = posicao;
+                        lowestFScore = fScore[posicao];
+                    }
+                }
+
+                if (posAtual.terreno == Terreno.Parede)
+                {
+                    continue;
+                }
+
+                if (mapa.ObterPremio(posAtual) != null)
+                {
+                    coletaPremio(mapa.ObterPremio(posAtual));
+                }
+
+                if (posAtual == saida.terrenoPosicao)
+                {
+                    return ReconstruirCaminho(cameFrom, posAtual);
+                }
+
+                openSet.Remove(posAtual);
+
+                foreach (TerrenoPosicao vizinho in mapa.obterTerrenosVizinhos(posAtual))
+                {
+                    if (vizinho.terreno == Terreno.Parede)
+                    {
+                        continue;
+                    }
+
+                    double tentativeGScore = gScore[posAtual] + posAtual.CalcularHeuristica(saida);
+                    if (tentativeGScore < gScore.GetValueOrDefault(vizinho, int.MaxValue))
+                    {
+                        cameFrom[vizinho] = posAtual;
+                        gScore[vizinho] = tentativeGScore;
+                        fScore[vizinho] = gScore[vizinho] + vizinho.CalcularHeuristica(saida);
+                        if (!openSet.Contains(vizinho))
+                        {
+                            openSet.Add(vizinho);
+                        }
+                    }
+
+                    this.custoAcumulado += (int)posAtual.terreno + fScore[posAtual];
+                }
+            }
+
+            return new List<TerrenoPosicao>();
+        }
+        
+        static List<TerrenoPosicao> ReconstruirCaminho(Dictionary<TerrenoPosicao, TerrenoPosicao> posInicial, TerrenoPosicao posFinal)
+        {
+            List<TerrenoPosicao> caminho = new();
+            while (posInicial.ContainsKey(posFinal))
+            {
+                caminho.Insert(0, posFinal);
+                posFinal = posInicial[posFinal];
+            }
+            caminho.Insert(0, posFinal);
+            return caminho;
+        }
+
     }
 }
