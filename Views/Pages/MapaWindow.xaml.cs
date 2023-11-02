@@ -27,14 +27,15 @@ namespace projeto_busca.Views.Pages
         private readonly Mapa mapa;
 
         private Gato gato;
+
+        private Boolean emExecucao;
         public MapaWindow(String tipoBusca)
         {
             InitializeComponent();
 
             this.tipoBusca = tipoBusca;
-
             this.mapa = MapaController.CriarMapa(10, 10);
-
+            this.emExecucao = false;
             this.gato = new Gato(this.mapa.Inicio.terrenoPosicao);
 
             List<TerrenoPosicao> terrenos = MapaController.RenderCenario(this.mapa);
@@ -51,35 +52,24 @@ namespace projeto_busca.Views.Pages
                 matrizGrid.Children.Add(image);
                 Grid.SetRow(image, pos.posicao.linha);
                 Grid.SetColumn(image, pos.posicao.coluna);
-
             }
         }
 
         private void ExecutarMovimento(List<TerrenoPosicao> posicoes)
         {
-
-            Task.Run(() =>
-            {
-                foreach (TerrenoPosicao pos in posicoes)
-                {
+            Task.Run(() => {
+                foreach (TerrenoPosicao pos in posicoes) {
                     System.Threading.Thread.Sleep(900);
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
+                    Application.Current.Dispatcher.Invoke(() => {
                         MoverGato(pos);
                     });
                 }
-
             });
-
         }
 
         private void MoverGato(TerrenoPosicao pos)
         {
-            TerrenoPosicao posAtual = gato.posicaoAtual();
-
-            UIElement gatoElement = matrizMoveGato.Children
-                    .Cast<UIElement>()
-                    .First(e => Grid.GetRow(e) == posAtual.posicao.linha && Grid.GetColumn(e) == posAtual.posicao.coluna);
+            UIElement gatoElement = (UIElement)matrizMoveGato.FindName("gato");
 
             gato.mudarPosicao(pos);
 
@@ -89,8 +79,12 @@ namespace projeto_busca.Views.Pages
 
         private void EfetuarBusca(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            System.Threading.Thread.Sleep(900);
+
+            if (e.Key == Key.Enter && !emExecucao)
             {
+                this.emExecucao = true;
+
                 List<TerrenoPosicao> caminho;
 
                 switch (this.tipoBusca)
@@ -116,21 +110,21 @@ namespace projeto_busca.Views.Pages
                         continue;
                     }
 
-                    UIElement imagemAnterior = matrizGrid.Children
-                    .Cast<UIElement>()
-                    .First(e => Grid.GetRow(e) == pos.posicao.linha && Grid.GetColumn(e) == pos.posicao.coluna);
-                    matrizGrid.Children.Remove(imagemAnterior);
-
                     Image image = renderImagem("caminho.png", 80, 80, "caminho");
 
-                    matrizGrid.Children.Add(image);
+                    matrizMoveGato.Children.Add(image);
                     Grid.SetRow(image, pos.posicao.linha);
                     Grid.SetColumn(image, pos.posicao.coluna);
+                }
+
+                if(!caminho.Any() ||  caminho.Last() != this.mapa.Saida.terrenoPosicao) {
+                    MessageBox.Show("Saída não foi encontrada.");
                 }
 
                 Image imageGato = renderImagem("gato.png", 60, 60, "gato");
 
                 matrizMoveGato.Children.Add(imageGato);
+                matrizMoveGato.RegisterName("gato", imageGato);
                 Grid.SetRow(imageGato, gato.posicaoAtual().posicao.linha);
                 Grid.SetColumn(imageGato, gato.posicaoAtual().posicao.coluna);
 
