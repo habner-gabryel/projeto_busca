@@ -67,6 +67,7 @@
         <Label Name="lbCusto" Content="" Foreground="#FF980202" FontSize="18" HorizontalAlignment="Left" Margin="1178,272,0,0" VerticalAlignment="Top" Height="30" Width="94"/>
         <Label Name="lbPontuacao" Content="" Foreground="#FFFFEC20" FontSize="18" HorizontalAlignment="Left" Margin="1178,307,0,0" VerticalAlignment="Top" Height="30" Width="94"/>
         <Label Name="lbTempo" Content="" Foreground="#FF02596F" FontSize="18" HorizontalAlignment="Left" Margin="1178,346,0,0" VerticalAlignment="Top" Height="30" Width="94"/>
-
+        <Label Content="Para executar" FontSize="18"  HorizontalAlignment="Left" Margin="40,268,0,0" VerticalAlignment="Top"/>
+        <Label Content="Pressione Enter" FontSize="18"  HorizontalAlignment="Left" Margin="40,298,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

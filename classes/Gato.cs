@@ -57,6 +57,11 @@ namespace projeto_busca.Classes
                     return caminhoPercorrido;
                 }
 
+                if (terrenoAtual != mapa.Inicio.terrenoPosicao || terrenoAtual != saida.terrenoPosicao)
+                {
+                    this.custoAcumulado += (int)terrenoAtual.terreno;
+                }
+
                 foreach (TerrenoPosicao vizinho in mapa.obterTerrenosVizinhos(terrenoAtual))
                 {
                     if (!visitados.Contains(vizinho))
@@ -64,7 +69,6 @@ namespace projeto_busca.Classes
                         List<TerrenoPosicao> novoLocal = new(caminhoPercorrido) { vizinho };
                         queue.Enqueue(new Tuple<TerrenoPosicao, List<TerrenoPosicao>>(vizinho, novoLocal));
                         visitados.Add(vizinho);
-                        this.custoAcumulado += (int)vizinho.terreno;
                     }
                 }
             }
@@ -80,7 +84,11 @@ namespace projeto_busca.Classes
             }
 
             visitados.Add(inicio);
-            this.custoAcumulado += (int)inicio.terreno;
+
+            if (inicio != mapa.Inicio.terrenoPosicao || inicio != saida.terrenoPosicao)
+            {
+                this.custoAcumulado += (int)inicio.terreno;
+            }
 
             if (mapa.ObterPremio(inicio) != null)
             {
@@ -117,7 +125,6 @@ namespace projeto_busca.Classes
             List<TerrenoPosicao> caminho = new();
             TerrenoPosicao posAtual = inicio;
 
-            this.custoAcumulado = 0;
             int custoAtual = (int)inicio.terreno;
 
             while (posAtual != saida.terrenoPosicao)
@@ -133,6 +140,11 @@ namespace projeto_busca.Classes
                 if (mapa.ObterPremio(posAtual) != null)
                 {
                     coletaPremio(mapa.ObterPremio(posAtual));
+                }
+
+                if (posAtual != mapa.Inicio.terrenoPosicao || posAtual != saida.terrenoPosicao)
+                {
+                    this.custoAcumulado += (int)posAtual.terreno;
                 }
 
                 TerrenoPosicao? proxPos = null;
@@ -153,7 +165,6 @@ namespace projeto_busca.Classes
                             distanciaMin = distancia;
                             proxPos = vizinho;
                         }
-                        this.custoAcumulado += (int)vizinho.terreno + distancia;
                     }
                 }
 
@@ -211,6 +222,11 @@ namespace projeto_busca.Classes
                     return ReconstruirCaminho(cameFrom, posAtual);
                 }
 
+                if(posAtual != mapa.Inicio.terrenoPosicao || posAtual != saida.terrenoPosicao)
+                {
+                    this.custoAcumulado += (int)posAtual.terreno;
+                }
+
                 openSet.Remove(posAtual);
 
                 foreach (TerrenoPosicao vizinho in mapa.obterTerrenosVizinhos(posAtual))
@@ -231,8 +247,6 @@ namespace projeto_busca.Classes
                             openSet.Add(vizinho);
                         }
                     }
-
-                    this.custoAcumulado += (int)posAtual.terreno + fScore[posAtual];
                 }
             }
 
