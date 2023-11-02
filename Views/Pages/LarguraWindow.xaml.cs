@@ -23,6 +23,8 @@ namespace projeto_busca.Views.Pages
     public partial class LarguraWindow : Window
     {
         private readonly Mapa mapa;
+
+        private Gato gato;
         public LarguraWindow()
         {
             InitializeComponent();
@@ -38,7 +40,7 @@ namespace projeto_busca.Views.Pages
         {
             foreach (TerrenoPosicao pos in posicoes)
             {
-                Image image = renderImagem(pos.imagem, 80, 80);
+                Image image = renderImagem(pos.imagem, 80, 80, null);
 
                 matrizGrid.Children.Add(image);
                 Grid.SetRow(image, pos.posicao.linha);
@@ -47,37 +49,81 @@ namespace projeto_busca.Views.Pages
             }
         }
 
-        private void EfetuarBusca()
-        {
-            Gato gato = new Gato(this.mapa.Inicio.terrenoPosicao);
+        private void ExecutarMovimento(List<TerrenoPosicao> posicoes) {
 
-            List<TerrenoPosicao> caminho = gato.buscaLargura(this.mapa, this.mapa.Saida);
-
-            foreach (TerrenoPosicao pos in caminho) {
-
-                if(pos == mapa.Saida.terrenoPosicao || pos == mapa.Inicio.terrenoPosicao) {
-                    continue;
+            Task.Run(() =>
+            {
+                foreach (TerrenoPosicao pos in posicoes)
+                {
+                    System.Threading.Thread.Sleep(900);
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        MoverGato(pos);
+                    });
                 }
 
-                UIElement imagemAnterior = matrizGrid.Children
-                .Cast<UIElement>()
-                .First(e => Grid.GetRow(e) == pos.posicao.linha && Grid.GetColumn(e) == pos.posicao.coluna);
-                matrizGrid.Children.Remove(imagemAnterior);
-               
-                Image image = renderImagem("caminho.png", 80, 80);
+            });
 
-                matrizGrid.Children.Add(image);
-                Grid.SetRow(image, pos.posicao.linha);
-                Grid.SetColumn(image, pos.posicao.coluna);
+        }
+
+        private void MoverGato(TerrenoPosicao pos)
+        {
+            TerrenoPosicao posAtual = gato.posicaoAtual();
+
+            UIElement gatoElement = matrizMoveGato.Children
+                    .Cast<UIElement>()
+                    .First(e => Grid.GetRow(e) == posAtual.posicao.linha && Grid.GetColumn(e) == posAtual.posicao.coluna);
+
+            gato.mudarPosicao(pos);
+
+            Grid.SetRow(gatoElement, pos.posicao.linha);
+            Grid.SetColumn(gatoElement, pos.posicao.coluna);
+        }
+
+        private void EfetuarBusca(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter) {
+                this.gato = new Gato(this.mapa.Inicio.terrenoPosicao);
+
+                List<TerrenoPosicao> caminho = gato.buscaLargura(this.mapa, this.mapa.Saida);
+
+                foreach (TerrenoPosicao pos in caminho)
+                {
+
+                    if (pos == mapa.Saida.terrenoPosicao || pos == mapa.Inicio.terrenoPosicao)
+                    {
+                        continue;
+                    }
+
+                    UIElement imagemAnterior = matrizGrid.Children
+                    .Cast<UIElement>()
+                    .First(e => Grid.GetRow(e) == pos.posicao.linha && Grid.GetColumn(e) == pos.posicao.coluna);
+                    matrizGrid.Children.Remove(imagemAnterior);
+
+                    Image image = renderImagem("caminho.png", 80, 80, "caminho");
+
+                    matrizGrid.Children.Add(image);
+                    Grid.SetRow(image, pos.posicao.linha);
+                    Grid.SetColumn(image, pos.posicao.coluna);
+                }
+
+                Image imageGato = renderImagem("gato.png", 60, 60, "gato");
+
+                matrizMoveGato.Children.Add(imageGato);
+                Grid.SetRow(imageGato, gato.posicaoAtual().posicao.linha);
+                Grid.SetColumn(imageGato, gato.posicaoAtual().posicao.coluna);
+
+                ExecutarMovimento(caminho);
             }
         }
 
-        private Image renderImagem(String nomeImg, int width, int height)
+        private Image renderImagem(String nomeImg, int width, int height, String nomeObj)
         {
             Image image = new()
             {
                 Width = width,
-                Height = height
+                Height = height,
+                Name = nomeObj
             };
 
             BitmapImage bitImagem = new();
@@ -93,10 +139,7 @@ namespace projeto_busca.Views.Pages
             return image;
         }
 
-        private void btBuscar_Click(object sender, EventArgs e) {
-            EfetuarBusca();
-            myPopup.IsOpen = false;
-        }
+
 
     }
 }

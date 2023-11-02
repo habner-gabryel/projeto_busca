@@ -24,6 +24,10 @@ namespace projeto_busca.Classes
 
         public void coletaPremio(Premio premio) { this.premiosColetados += premio.valor; }
 
+        public TerrenoPosicao posicaoAtual() { return posicaoGato; }
+
+        public void mudarPosicao(TerrenoPosicao pos) {  this.posicaoGato = pos; }
+
         public List<TerrenoPosicao> buscaLargura(Mapa mapa, Saida saida)
         {
             Queue<Tuple<TerrenoPosicao, List<TerrenoPosicao>>> queue = new();
