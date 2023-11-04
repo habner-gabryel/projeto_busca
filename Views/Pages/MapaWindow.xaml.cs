@@ -3,6 +3,7 @@ using projeto_busca.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -159,10 +160,10 @@ namespace projeto_busca.Views.Pages
 
             BitmapImage bitImagem = new();
 
-            String url = "C:\\repositorios\\VisualStudio\\projeto_busca\\Views\\Imagens\\" + nomeImg;
+            String url = Directory.GetCurrentDirectory() + "/Assets/" + nomeImg;
 
             bitImagem.BeginInit();
-            bitImagem.UriSource = new(@url);
+            bitImagem.UriSource = new(@url, UriKind.RelativeOrAbsolute);
             bitImagem.DecodePixelWidth = width;
             bitImagem.DecodePixelHeight = height;
             bitImagem.EndInit();
