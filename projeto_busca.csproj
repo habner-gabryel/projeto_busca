@@ -25,10 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Pages\Imagens\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Assets\arenoso.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
